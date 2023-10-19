@@ -5,12 +5,14 @@
 #ifndef GAMEOFLIFE_GAME_H
 #define GAMEOFLIFE_GAME_H
 
-const int width = 1000;
-const int height = 1000;
-const int size_cell = 15;
-const int count_cell = width/size_cell;
+#include <SFML/Graphics/RenderWindow.hpp>
 
-void draw(const sf::RectangleShape& cell);
-sf::RectangleShape getCell(int i, int j, sf::Color color);
+constexpr int width = 1000;
+constexpr int height = 1000;
+constexpr int size_cell = 10;
+constexpr int count_cell = width / size_cell;
 
+void draw(int i, int j, bool live);
+void flush();
+void checkClose();
 #endif //GAMEOFLIFE_GAME_H

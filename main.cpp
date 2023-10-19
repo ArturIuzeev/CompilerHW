@@ -5,25 +5,9 @@
 #include <SFML/Graphics.hpp>
 #include "game.h"
 
+static sf::RenderWindow window(sf::VideoMode(width, height), "GameOfLife");
+
 extern void app();
-
-sf::RenderWindow window(sf::VideoMode(width, height), "GameOfLife");
-sf::RectangleShape game_map[count_cell][count_cell];
-sf::Event event{};
-
-void runGame() {
-    while (window.isOpen()) {
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed) window.close();
-            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) window.close();
-
-        }
-
-        window.clear();
-        app();
-        window.display();
-    }
-}
 
 sf::RectangleShape getCell(const int i, const int j, sf::Color color) {
     sf::RectangleShape cell(sf::Vector2f(size_cell, size_cell));
@@ -32,30 +16,40 @@ sf::RectangleShape getCell(const int i, const int j, sf::Color color) {
     return cell;
 }
 
-void draw(const sf::RectangleShape &cell) {
-    window.draw(cell);
+
+void draw(int i, int j, bool live) {
+    if (live) {
+        window.draw(getCell(i, j, sf::Color::Red));
+        return;
+    }
+
+    window.draw(getCell(i, j, sf::Color::White));
 }
 
-// Why we divide on 2 (I don't know why not)
-void init() {
+void flush() {
+    window.display();
+    window.clear();
+}
+
+void initGame() {
     window.setFramerateLimit(60);
-    if (window.isOpen()) {
-        for (int i = 0; i < count_cell; ++i) {
-            for (int j = 0; j < count_cell; ++j) {
-                if (rand() % 2 == 0) {
-                    game_map[i][j] = getCell(i, j, sf::Color::Red);
-                } else {
-                    game_map[i][j] = getCell(i, j, sf::Color::White);
-                }
-                draw(game_map[i][j]);
-            }
+    srand(time(NULL));
+}
+
+void checkClose() {
+    sf::Event event{};
+
+    while (window.pollEvent(event)) {
+        if (event.type == sf::Event::Closed ||
+            event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
+            window.close();
+            return;
         }
-        window.display();
     }
 }
 
 int main() {
-    init();
-    runGame();
+    initGame();
+    app();
     return 0;
 }
