@@ -72,6 +72,8 @@ void app() {
     while (1) {
         checkClose();
         updateGameMap(game_map);
-        flush();
+        if (!flush()) {
+            return;
+        }
     }
 }

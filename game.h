@@ -13,6 +13,6 @@ constexpr int size_cell = 10;
 constexpr int count_cell = width / size_cell;
 
 void draw(int i, int j, bool live);
-void flush();
+bool flush();
 void checkClose();
 #endif //GAMEOFLIFE_GAME_H

@@ -26,9 +26,13 @@ void draw(int i, int j, bool live) {
     window.draw(getCell(i, j, sf::Color::White));
 }
 
-void flush() {
-    window.display();
-    window.clear();
+bool flush() {
+    if (window.isOpen()) {
+        window.display();
+        window.clear();
+        return true;
+    }
+    return false;
 }
 
 void initGame() {
