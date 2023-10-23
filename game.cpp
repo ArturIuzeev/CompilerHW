@@ -2,6 +2,7 @@
 // Created by Arthur Yuzeev on 10/18/23.
 //
 
+#include <cstdlib>
 #include "game.h"
 
 int count_neighbors(const int i, const int j, const bool *game_map) {

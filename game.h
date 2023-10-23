@@ -5,7 +5,6 @@
 #ifndef GAMEOFLIFE_GAME_H
 #define GAMEOFLIFE_GAME_H
 
-#include <SFML/Graphics/RenderWindow.hpp>
 
 constexpr int width = 1000;
 constexpr int height = 1000;
