@@ -9,7 +9,7 @@ static sf::RenderWindow window(sf::VideoMode(width, height), "GameOfLife");
 
 extern void app();
 
-sf::RectangleShape getCell(const int i, const int j, sf::Color color) {
+sf::RectangleShape getCell(const int i, const int j, const sf::Color color) {
     sf::RectangleShape cell(sf::Vector2f(size_cell, size_cell));
     cell.setFillColor(color);
     cell.setPosition(i * size_cell, j * size_cell);
@@ -17,7 +17,7 @@ sf::RectangleShape getCell(const int i, const int j, sf::Color color) {
 }
 
 
-void draw(int i, int j, bool live) {
+void draw(const unsigned int i, const unsigned int j, const bool live) {
     if (live) {
         window.draw(getCell(i, j, sf::Color::Red));
         return;
@@ -27,12 +27,13 @@ void draw(int i, int j, bool live) {
 }
 
 bool flush() {
-    if (window.isOpen()) {
-        window.display();
-        window.clear();
-        return true;
+    if (!window.isOpen()) {
+        return false;
     }
-    return false;
+
+    window.display();
+    window.clear();
+    return true;
 }
 
 void initGame() {
